@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import createCleanupEmptyPlugin from 'draft-js-cleanup-empty-plugin';
 import createEntityPropsPlugin from 'draft-js-entity-props-plugin';
 import createToolbarPlugin, {ToolbarDecorator} from 'draft-js-toolbar-plugin';
 import createAutoListPlugin from 'draft-js-autolist-plugin';
@@ -8,7 +7,6 @@ import createAutoListPlugin from 'draft-js-autolist-plugin';
 import 'draft-js-toolbar-plugin/lib/plugin.css';
 
 // Utils
-import addBlock from 'draft-js-dnd-plugin/lib/modifiers/addBlock';
 import {RichUtils} from 'draft-js';
 
 // Init Plugins
