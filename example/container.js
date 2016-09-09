@@ -102,7 +102,7 @@ export default class Example extends React.Component {
             <div className="flex-container">
                 <div className="head">
                     <div className="logo">Draft-Wysiwyg</div>
-                    <a className="github-button" href="https://github.com/bkniffler/draft-wysiwyg/" target="_blank">
+                    <a className="github-button" href="https://github.com/textioHQ/draft-wysiwyg/" target="_blank">
                         View on Github
                     </a>
                     <button className={"button" + (view === 'json' ? ' active' : '')}

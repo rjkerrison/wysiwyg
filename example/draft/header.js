@@ -4,7 +4,10 @@ import DraftEditorBlock from 'draft-js/lib/DraftEditorBlock.react';
 export default function (size) {
     return class Header extends Component {
         render() {
-            return React.createElement('h' + size, {className: 'header'}, <DraftEditorBlock {...this.props}/>)
+            const style = {
+                fontFamily: "Helvetica"
+            };
+            return React.createElement('h' + size, {style, className: 'header'}, <DraftEditorBlock {...this.props}/>)
         }
     }
 }
