@@ -2,7 +2,7 @@
 A wysiwyg editor that mimics medium, build on top of https://github.com/facebook/draft-js and https://github.com/draft-js-plugins/draft-js-plugins. All the relevant behaviour comes from plugins, so this may serve as an example of using the plugin architecture and the different plugins. You can also install and use draft-wysiwyg right away.
 
 ## Demo
-https://draft-wysiwyg.herokuapp.com/
+https://textio-editor.herokuapp.com/
 
 ## Features
 - Copy-Paste Functionality
