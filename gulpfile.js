@@ -1,9 +1,9 @@
 var gulp = require('gulp');
 
 gulp.task("build", function (callback) {
-   global.DEBUG = false;
+    global.DEBUG = false;
 
-   require('wrappack/gulpfile')(
-      require('./example/config.js')(), callback
-   );
+    require('wrappack/gulpfile')(
+        require('./example/config.js')(), callback
+    );
 });

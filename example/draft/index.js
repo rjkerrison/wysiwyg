@@ -5,8 +5,8 @@ import Youtube from './youtube';
 import ResizeableDiv from './resizeable-div';
 import ResizeableDiv2 from './resizeable-div2';
 /*import Columns2 from './columns2';
-import Image from './image';
-import Unstyled from './unstyled';*/
+ import Image from './image';
+ import Unstyled from './unstyled';*/
 
 var blocks = {
     'header-1': Header(1),
@@ -18,10 +18,10 @@ var blocks = {
     'resizeable-div': ResizeableDiv,
     'resizeable-div2': ResizeableDiv2,
     /*
-    columns2: Columns2,
-    image: Image,
-    unstyled: Unstyled,
-    */
+     columns2: Columns2,
+     image: Image,
+     unstyled: Unstyled,
+     */
 }
 
 export const Blocks = blocks;
