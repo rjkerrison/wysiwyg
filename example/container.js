@@ -138,16 +138,7 @@ export default class Example extends React.Component {
                                     handleUpload={this.upload}
                                     toolbar={{
                                       disableItems: ['H5'],
-                                      textActions: [
-                                      {
-                                        button: <span>Quote</span>,
-                                        label: 'Quote',
-                                        active: (block, editorState) => block.get('type') === 'blockquote',
-                                        toggle: (block, action, editorState, setEditorState) => setEditorState(RichUtils.toggleBlockType(
-                                          editorState,
-                                          'blockquote'
-                                        )),
-                                      }]
+                                      textActions: []
                                     }}/>
                         </div>
                     </div>

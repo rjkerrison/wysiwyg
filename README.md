@@ -5,25 +5,34 @@ A wysiwyg editor that mimics medium, build on top of https://github.com/facebook
 https://draft-wysiwyg.herokuapp.com/
 
 ## Features
-- Drag & Drop uploading
+- Copy-Paste Functionality
 - Inline toolbar for text
 - Block drag/drop
-- Block resizing (horizontal/vertical with absolute/relative sizes and aspect ratios)
 - Block toolbars
 - Block keydown handling to remove blocks (backspace) or move cursor to next/previous block
-- Tables (nested draft-js)
-- Links
-- Some more things
+- Bold, H1, H2, UL, LI
+- Blocks copying of undesirable things like tables, images, etc
+
+## Needs Work
+- Allows multiple empty blocks
+- It's hard to end a list in an intuitive way
 
 ## Installation
 ```
 npm install draft-wysiwyg
+```
 or
+```
 sudo npm install draft-wysiwyg
 ```
 
 ## Usage
-WIP
+```
+npm install
+npm start
+```
+    
+Then open [localhost:3030](http://localhost:3030)
 
 ## Contributing
 Pull requests are very welcome, feel free to commit your ideas!
