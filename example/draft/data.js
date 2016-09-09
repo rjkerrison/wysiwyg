@@ -3,7 +3,7 @@ var rawContent = {
    "blocks": [
       {
          "key": "1ahm2",
-         "text": "You can edit this document",
+         "text": "You can edit this document. Textio is awesome.",
          "type": "header-1",
          "depth": 0,
          "inlineStyleRanges": [],
@@ -11,7 +11,7 @@ var rawContent = {
       },
       {
          "key": "a1uof",
-         "text": "This is bold. This is not.",
+         "text": "This is bold. This is not. Textio is awesome",
          "type": "unstyled",
          "depth": 0,
          "inlineStyleRanges": [

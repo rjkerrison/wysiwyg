@@ -1,24 +1,57 @@
 import React, {Component} from 'react';
-import {EditorState, convertToRaw, convertFromRaw} from 'draft-js';
-import Editor from 'draft-js-plugins-editor-wysiwyg';
-import {DefaultDraftBlockRenderMap} from 'draft-js';
+import ReactDOM from 'react-dom';
+import {EditorState, convertToRaw, convertFromRaw, CompositeDecorator} from 'draft-js';
+import {DefaultDraftBlockRenderMap, Editor} from 'draft-js';
 import createPlugins from './create-plugins';
 import {Map} from 'immutable';
 
 class WysiwygEditor extends Component {
   constructor(props) {
     super(props);
+    const PHRASE_REGEX = /textio is awesome/ig;
+
+    function phraseStrategy(contentBlock, callback) {
+      findWithRegex(PHRASE_REGEX, contentBlock, callback);
+    }
+
+    function findWithRegex(regex, contentBlock, callback) {
+      const text = contentBlock.getText();
+      let matchArr, start;
+      while ((matchArr = regex.exec(text)) !== null) {
+        console.log('found match');
+        start = matchArr.index;
+        callback(start, start + matchArr[0].length);
+      }
+    }
+
+    const styles = {
+      backgroundColor: '#ff9999'
+    };
+
+    const PhraseSpan = (props) => {
+      console.log(props);
+      return <span style={styles}>{props.children}</span>;
+    };
+
+    const phraseDecorator = new CompositeDecorator([
+      {
+        strategy: phraseStrategy,
+        component: PhraseSpan,
+      },
+    ]);
+
     this.batch = batch(200);
     this.plugins = createPlugins(props);
-    this.editorState = props.value
-      ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.value))
-      : EditorState.createEmpty();
 
     this.blockRenderMap = DefaultDraftBlockRenderMap.merge(
       this.customBlockRendering(props)
     );
 
-    this.state = {};
+    this.state = {
+      editorState: props.value
+          ? EditorState.push(EditorState.createEmpty(phraseDecorator), convertFromRaw(props.value))
+          : EditorState.createEmpty(phraseDecorator)
+    };
   }
 
   componentWillUnmount(){
@@ -27,9 +60,6 @@ class WysiwygEditor extends Component {
 
   shouldComponentUpdate(props, state) {
     if (this.props.value !== props.value && this._raw !== props.value) {
-      this.editorState = !props.value
-        ? EditorState.createEmpty()
-        : EditorState.push(this.editorState, convertFromRaw(props.value));
       return true;
     } else if (this.state.active !== state.active
       || this.state.readOnly !== state.readOnly
@@ -44,18 +74,7 @@ class WysiwygEditor extends Component {
     return false;
   }
 
-  onChange = (editorState) => {
-    if (this.unmounted) return;
-    this.editorState = editorState;
-    this.setState({editorState: Date.now()});
-
-    if (this.props.onChange) {
-      this.batch(() => {
-        this._raw = convertToRaw(editorState.getCurrentContent());
-        this.props.onChange(this._raw, editorState);
-      });
-    }
-  };
+  onChange = (editorState) => this.setState({editorState});
 
   focus = () => {
     this.refs.editor.focus();
@@ -78,12 +97,6 @@ class WysiwygEditor extends Component {
       'unstyled': {
         element: 'div',
       },
-      'block-image': {
-        element: 'div',
-      },
-      'block-table': {
-        element: 'div',
-      }
     };
     for (var key in blockTypes) {
       newObj[key] = {
@@ -94,11 +107,10 @@ class WysiwygEditor extends Component {
   }
 
   render() {
-    const {editorState} = this;
-    const {isDragging, progress, readOnly} = this.props;
+    const {readOnly} = this.props;
 
     return (
-      <Editor readOnly={readOnly} editorState={editorState}
+      <Editor readOnly={readOnly} editorState={this.state.editorState}
               plugins={this.plugins}
               blockRenderMap={this.blockRenderMap}
               blockRendererFn={this.blockRendererFn}
