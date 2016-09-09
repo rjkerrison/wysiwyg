@@ -39,15 +39,14 @@
     "draft-js-resizeable-plugin": "^1.0.8",
     "draft-js-table-plugin": "^1.0.4",
     "draft-js-toolbar-plugin": "^1.0.5",
-    "immutable": "^3.7.4"
-  },
-  "devDependencies": {
+    "immutable": "^3.7.4",
     "express": "^4.13.1",
-    "gulp": "^3.9.0",
     "multer": "^1.1.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "superagent": "^1.8.0",
+    "gulp": "^3.9.0",
     "wrappack": "^0.3.10"
-  }
+  },
+  "devDependencies": {}
 }
