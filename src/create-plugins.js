@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import createCleanupEmptyPlugin from 'draft-js-cleanup-empty-plugin';
 import createEntityPropsPlugin from 'draft-js-entity-props-plugin';
 import createToolbarPlugin, {ToolbarDecorator} from 'draft-js-toolbar-plugin';
+import createAutoListPlugin from 'draft-js-autolist-plugin';
 
 // Styles
 import 'draft-js-toolbar-plugin/lib/plugin.css';
@@ -17,6 +18,7 @@ export default ({
 }) => [
     plugins,
     createEntityPropsPlugin({}),
+    createAutoListPlugin(),
     createToolbarPlugin({
         __toolbarHandler: {
             add: props => console.log('Add toolbar', props),

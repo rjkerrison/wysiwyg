@@ -1,13 +1,32 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {EditorState, convertToRaw, convertFromRaw, CompositeDecorator} from 'draft-js';
-import {DefaultDraftBlockRenderMap, Editor} from 'draft-js';
+import {DefaultDraftBlockRenderMap} from 'draft-js';
+import Editor from 'draft-js-plugins-editor';
 import createPlugins from './create-plugins';
 import {Map} from 'immutable';
 
 class WysiwygEditor extends Component {
     constructor(props) {
         super(props);
+
+        this.batch = batch(200);
+        this.plugins = createPlugins(props);
+
+        this.blockRenderMap = DefaultDraftBlockRenderMap.merge(
+            this.customBlockRendering(props)
+        );
+
+        this.state = {
+            editorState: props.value
+                ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.value))
+                : EditorState.createEmpty()
+        };
+
+        this.phraseDecorator = this.getPhraseDecorator();
+    }
+
+    getPhraseDecorator() {
         const PHRASE_REGEX = /textio is awesome/ig;
 
         function phraseStrategy(contentBlock, callback) {
@@ -33,24 +52,9 @@ class WysiwygEditor extends Component {
             return <span style={styles}>{props.children}</span>;
         };
 
-        const phraseDecorator = new CompositeDecorator([
-            {
-                strategy: phraseStrategy,
-                component: PhraseSpan,
-            },
-        ]);
-
-        this.batch = batch(200);
-        this.plugins = createPlugins(props);
-
-        this.blockRenderMap = DefaultDraftBlockRenderMap.merge(
-            this.customBlockRendering(props)
-        );
-
-        this.state = {
-            editorState: props.value
-                ? EditorState.push(EditorState.createEmpty(phraseDecorator), convertFromRaw(props.value))
-                : EditorState.createEmpty(phraseDecorator)
+        return {
+            strategy: phraseStrategy,
+            component: PhraseSpan,
         };
     }
 
@@ -108,12 +112,14 @@ class WysiwygEditor extends Component {
 
     render() {
         const {readOnly} = this.props;
+        const decorators = [this.phraseDecorator];
 
         return (
             <Editor readOnly={readOnly} editorState={this.state.editorState}
                     plugins={this.plugins}
                     blockRenderMap={this.blockRenderMap}
                     blockRendererFn={this.blockRendererFn}
+                    decorators={decorators}
                     onChange={this.onChange}
                     ref="editor"
             />
