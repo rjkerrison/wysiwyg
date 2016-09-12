@@ -75,26 +75,6 @@ export default class Example extends React.Component {
         return {};
     }
 
-    renderSide() {
-        return (
-            <div className="sidepanel">
-                <span className="info">Drag & Drop one of these</span>
-                {Object.keys(Blocks).filter(key=>key.indexOf('header-') !== 0 && key !== 'unstyled').concat(['block-image', 'block-table']).map(key=> {
-                    var startDrag = (e)=> {
-                        e.dataTransfer.dropEffect = 'move';
-                        e.dataTransfer.setData("text", 'DRAFTJS_BLOCK_TYPE:' + key);
-                    }
-                    return (
-                        <div key={key} className="item" draggable="true" onDragStart={startDrag}
-                             style={{cursor: "move"}}>
-                            {key}
-                        </div>
-                    )
-                })}
-            </div>
-        )
-    }
-
     render() {
         const {data, view, saved} = this.state;
 
@@ -119,17 +99,7 @@ export default class Example extends React.Component {
                     <button className="button" onClick={(v)=>this.setState({data: null})}>
                         Clear
                     </button>
-                    {/*<button className="button" onClick={()=>this.setState({data: Draft.AddBlock(data, 'end', 'div', {}, true)})}>
-                     Horizontal+Vertical
-                     </button>
-                     <button className="button" onClick={()=>this.setState({data: Draft.AddBlock(data, 'start', 'div2', {}, true)})}>Add
-                     Horizontal only
-                     </button>
-                     <button className="button" onClick={()=>this.setState({data: Draft.AddBlock(data, 'start', 'youtube', {}, true)})}>Add
-                     Youtube
-                     </button>*/}
                 </div>
-                {this.renderSide()}
                 <div className="container-content" style={{display: view === 'json' ? 'block' : 'none'}}>
                     <pre style={{
                         whiteSpace: 'pre-wrap',
