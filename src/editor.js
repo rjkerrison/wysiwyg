@@ -79,6 +79,11 @@ class WysiwygEditor extends Component {
     }
 
     onChange = (editorState) => this.setState({editorState});
+    onPaste = (text, html) => {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, "text/html");
+        console.log(doc);
+    };
 
     focus = () => {
         this.refs.editor.focus();
@@ -121,6 +126,7 @@ class WysiwygEditor extends Component {
                     blockRendererFn={this.blockRendererFn}
                     decorators={decorators}
                     onChange={this.onChange}
+                    handlePastedText={this.onPaste}
                     ref="editor"
             />
         );
