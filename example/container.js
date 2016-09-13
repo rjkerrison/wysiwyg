@@ -77,9 +77,12 @@ export default class Example extends React.Component {
 
     render() {
         const {data, view, saved} = this.state;
+        const styles = {
+            WebkitUserSelect: 'none'
+        };
 
         return (
-            <div className="flex-container">
+            <div style={styles} className="flex-container">
                 <div className="head">
                     <div className="logo">Textio Editor</div>
                     <a className="github-button" href="https://github.com/textioHQ/draft-wysiwyg/" target="_blank">
