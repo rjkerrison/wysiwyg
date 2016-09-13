@@ -78,7 +78,7 @@ export default class Example extends React.Component {
     render() {
         const {data, view, saved} = this.state;
         const styles = {
-            WebkitUserSelect: 'none'
+            // WebkitUserSelect: 'none'
         };
 
         return (
