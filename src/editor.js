@@ -27,12 +27,18 @@ class WysiwygEditor extends Component {
                 : EditorState.createEmpty()
         };
 
-        this.phraseDecorator = this.getPhraseDecorator();
-        this.handleClick = this.handleClick.bind(this);
+        this.phraseDecorator = this.getPhraseDecorator()
+        this.handleEnter = this.handleEnter.bind(this)
+        this.handleLeave = this.handleLeave.bind(this)
     }
 
-    handleClick() {
-        console.log('meow')
+    handleEnter(e) {
+        console.log('enter')
+        console.log(e)
+    }
+
+    handleLeave(e) {
+        console.log('leave')
     }
     
     getPhraseDecorator() {
@@ -72,13 +78,13 @@ class WysiwygEditor extends Component {
             } else {
                 counter = counter + 1;
                 let altWordsItems = genderedObject[(props.decoratedText).toLowerCase()].map((altWord, index) => {
-                    return <li onClick={this.handleClick} key={index}>{altWord}</li>
+                    return <li key={index}>{altWord}</li>
                 })
                 return (
-                    <span>
+                    <span onMouseEnter={this.handleEnter} onMouseLeave={this.handleLeave}>
                         <span className={genderedClassName} data-tip data-for={counter.toString()}>{props.children}</span>
-                        <ReactTooltip id={counter.toString()} effect='solid' aria-haspopup='true' delayHide={1000}>
-                            <ul className='altListUl'>{altWordsItems}</ul>
+                        <ReactTooltip id={counter.toString()} effect='solid' aria-haspopup='true' delayHide={1000} cursor='pointer' place='bottom'>
+                            <ul className='altListUl' style={{listStyleType:'none'}}>{altWordsItems}</ul>
                         </ReactTooltip>
                     </span>
                 )
