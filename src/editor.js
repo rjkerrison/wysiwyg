@@ -5,6 +5,10 @@ import {DefaultDraftBlockRenderMap} from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
 import createPlugins from './create-plugins';
 import {Map} from 'immutable';
+import {femWords, mascWords} from './words.js'
+import ReactTooltip from 'react-tooltip'
+
+import './editorStyles.css'
 
 class WysiwygEditor extends Component {
     constructor(props) {
@@ -24,38 +28,67 @@ class WysiwygEditor extends Component {
         };
 
         this.phraseDecorator = this.getPhraseDecorator();
+        this.handleClick = this.handleClick.bind(this);
     }
 
+    handleClick() {
+        console.log('meow')
+    }
+    
     getPhraseDecorator() {
-        const PHRASE_REGEX = /textio is awesome/ig;
+        let mascWordsArr = Object.keys(mascWords)
+        let MASC_REGEX = new RegExp(`\\b(${mascWordsArr.join('|')})`, 'gi')
+        let femWordsArr = Object.keys(femWords)
+        let FEM_REGEX = new RegExp(`\\b(${femWordsArr.join('|')})`, 'gi')
 
         function phraseStrategy(contentBlock, callback) {
-            findWithRegex(PHRASE_REGEX, contentBlock, callback);
+            findWithRegex(MASC_REGEX, contentBlock, callback)
+            findWithRegex(FEM_REGEX, contentBlock, callback)
         }
 
         function findWithRegex(regex, contentBlock, callback) {
             const text = contentBlock.getText();
             let matchArr, start;
             while ((matchArr = regex.exec(text)) !== null) {
-                console.log('found match');
                 start = matchArr.index;
                 callback(start, start + matchArr[0].length);
             }
         }
 
-        const styles = {
-            backgroundColor: '#ff9999'
+        const PhraseSpan = (props) => {
+            let caseInsensitiveRegex = new RegExp(props.decoratedText, 'i')
+            if(caseInsensitiveRegex.test(mascWordsArr.join('|'))) {
+                return createPhraseSpan(props, mascWords, 'mascWordSpan')
+            } else if(caseInsensitiveRegex.test(femWordsArr.join('|'))){
+                return createPhraseSpan(props, femWords, 'femWordSpan')
+            }
         };
 
-        const PhraseSpan = (props) => {
-            console.log(props);
-            return <span style={styles}>{props.children}</span>;
-        };
+        let counter = 0;
+        
+        const createPhraseSpan = (props, genderedObject, genderedClassName) => {
+            if(genderedObject[(props.decoratedText).toLowerCase()] == null){
+                return <span className={genderedClassName}>{props.children}</span>;
+            } else {
+                counter = counter + 1;
+                let altWordsItems = genderedObject[(props.decoratedText).toLowerCase()].map((altWord, index) => {
+                    return <li onClick={this.handleClick} key={index}>{altWord}</li>
+                })
+                return (
+                    <span>
+                        <span className={genderedClassName} data-tip data-for={counter.toString()}>{props.children}</span>
+                        <ReactTooltip id={counter.toString()} effect='solid' aria-haspopup='true' delayHide={1000}>
+                            <ul className='altListUl'>{altWordsItems}</ul>
+                        </ReactTooltip>
+                    </span>
+                )
+            }
+        }
 
         return {
             strategy: phraseStrategy,
             component: PhraseSpan,
-        };
+        };        
     }
 
     componentWillUnmount() {

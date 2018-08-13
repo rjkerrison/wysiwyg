@@ -1,0 +1,23 @@
+.altListUl {
+    text-decoration: none;
+}
+
+.mascWordSpan:hover {
+    background-color: #8db5f4;
+    color: white;
+}
+
+.femWordSpan:hover {
+    background-color: #ff9999;
+    color: white;
+}
+
+.femWordSpan {
+    border: 2px solid #ff9999;
+    border-radius: 10px;
+}
+
+.mascWordSpan {
+    border: 2px solid #8db5f4;
+    border-radius: 10px;
+}

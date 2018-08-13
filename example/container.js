@@ -83,7 +83,7 @@ export default class Example extends React.Component {
 
         return (
             <div style={styles} className="flex-container">
-                <div className="head">
+                {/* <div className="head">
                     <div className="logo">Textio Editor</div>
                     <a className="github-button" href="https://github.com/textioHQ/draft-wysiwyg/" target="_blank">
                         View on Github
@@ -109,7 +109,7 @@ export default class Example extends React.Component {
                         width: '750px',
                         margin: 'auto'
                     }}>{JSON.stringify(data, null, 3)}</pre>
-                </div>
+                </div> */}
                 <div className="container-content" style={{display: view !== 'json' ? 'block' : 'none'}}>
                     <div className="TeXEditor-root">
                         <div className="TeXEditor-editor">
