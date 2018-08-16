@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import {EditorState, convertToRaw, convertFromRaw, CompositeDecorator} from 'draft-js';
 import {DefaultDraftBlockRenderMap} from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
 import createPlugins from './create-plugins';
 import {Map} from 'immutable';
 import {femWords, mascWords} from './words.js'
-import ReactTooltip from 'react-tooltip'
-
+import ReactTooltip from 'react-tooltip';
 import './editorStyles.css'
 
 class WysiwygEditor extends Component {
@@ -24,21 +24,14 @@ class WysiwygEditor extends Component {
         this.state = {
             editorState: props.value
                 ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.value))
-                : EditorState.createEmpty()
+                : EditorState.createEmpty(),
+            update: false
         };
-
         this.phraseDecorator = this.getPhraseDecorator()
-        this.handleEnter = this.handleEnter.bind(this)
-        this.handleLeave = this.handleLeave.bind(this)
     }
 
-    handleEnter(e) {
-        console.log('enter')
-        console.log(e)
-    }
-
-    handleLeave(e) {
-        console.log('leave')
+    handleClick(e) {
+        this.setState({ update: true, altWord: e.target.innerText });
     }
     
     getPhraseDecorator() {
@@ -49,9 +42,9 @@ class WysiwygEditor extends Component {
 
         function phraseStrategy(contentBlock, callback) {
             findWithRegex(MASC_REGEX, contentBlock, callback)
-            findWithRegex(FEM_REGEX, contentBlock, callback)
+            findWithRegex(FEM_REGEX, contentBlock, callback)        
         }
-
+ 
         function findWithRegex(regex, contentBlock, callback) {
             const text = contentBlock.getText();
             let matchArr, start;
@@ -62,6 +55,7 @@ class WysiwygEditor extends Component {
         }
 
         const PhraseSpan = (props) => {
+            console.log('phrase span state', this.state)
             let caseInsensitiveRegex = new RegExp(props.decoratedText, 'i')
             if(caseInsensitiveRegex.test(mascWordsArr.join('|'))) {
                 return createPhraseSpan(props, mascWords, 'mascWordSpan')
@@ -77,24 +71,31 @@ class WysiwygEditor extends Component {
                 return <span className={genderedClassName}>{props.children}</span>;
             } else {
                 counter = counter + 1;
+                counter = counter.toString();
                 let altWordsItems = genderedObject[(props.decoratedText).toLowerCase()].map((altWord, index) => {
-                    return <li key={index}>{altWord}</li>
+                    return <li key={index} onClick={this.handleClick.bind(this)}>{altWord}</li>
                 })
                 return (
-                    <span onMouseEnter={this.handleEnter} onMouseLeave={this.handleLeave}>
-                        <span className={genderedClassName} data-tip data-for={counter.toString()}>{props.children}</span>
-                        <ReactTooltip id={counter.toString()} effect='solid' aria-haspopup='true' delayHide={1000} cursor='pointer' place='bottom'>
-                            <ul className='altListUl' style={{listStyleType:'none'}}>{altWordsItems}</ul>
+                    <span>
+                        <span 
+                            className={genderedClassName} 
+                            data-tip 
+                            data-for={counter}
+                            >{props.children}</span>
+                        <ReactTooltip className='focusTooltip' delayHide={500} id={counter} effect='solid' aria-haspopup='true' cursor='pointer' place='bottom' getContent={() => {
+                            return <ul className='altListUl'>{altWordsItems}</ul>
+                        }}> 
                         </ReactTooltip>
                     </span>
                 )
             }
         }
-
+        
         return {
             strategy: phraseStrategy,
             component: PhraseSpan,
-        };        
+        };       
+ 
     }
 
     componentWillUnmount() {
@@ -102,7 +103,11 @@ class WysiwygEditor extends Component {
     }
 
     shouldComponentUpdate(props, state) {
-        if (this.props.value !== props.value && this._raw !== props.value) {
+        if(this.state.update) {
+            this.getPhraseDecorator()
+            this.setState({update: false, altWord: null})
+            return true;
+        } else if (this.props.value !== props.value && this._raw !== props.value) {
             return true;
         } else if (this.state.active !== state.active
             || this.state.readOnly !== state.readOnly
@@ -113,7 +118,7 @@ class WysiwygEditor extends Component {
             || this.props.uploading !== props.uploading
             || this.props.percent !== props.percent) {
             return true;
-        }
+        } 
         return false;
     }
 

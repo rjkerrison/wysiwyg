@@ -1,5 +1,10 @@
-.altListUl {
+.hideList {
     text-decoration: none;
+    display: none;
+}
+
+.displayList {
+    display: block;
 }
 
 .mascWordSpan:hover {
@@ -20,4 +25,20 @@
 .mascWordSpan {
     border: 2px solid #8db5f4;
     border-radius: 10px;
+}
+
+.focusTooltip {
+    cursor: pointer;
+    pointer-events: auto !important;
+}
+
+.focusTooltip:hover {
+    cursor: pointer;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.altListUl {
+    list-style-type: none;
 }

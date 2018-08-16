@@ -242,3 +242,23 @@ body{
 .sidepanel .item{
   margin-bottom: 5px;
 }
+
+.reedLogo {
+  width: 20vw;
+}
+
+.bannerHeading {
+  background-image: url('recruiter-advice-hero.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 20vh;
+  margin: 0 auto;
+}
+
+.bannerHeading h1,
+.bannerHeading p {
+  color: #ffffff;
+  font-family: 'Montserrat';
+  text-align: center;
+}
+

@@ -23,11 +23,11 @@ var femWords = {
 
 var mascWords = {
     'manage': ['handle', 'lead', 'run'],
+    'proven track record': ['consistent record', 'consistent track record'],
     'proven': ['confirmed', 'shown', 'tried', 'validated'],
     'competitive': ['bold', 'daring', 'high reaching'],
     'enforce': ['carry out', 'implement', 'make sure'],
     'phenomenal': ['excellent', 'extraordinary', 'outstanding'],
-    'manage': ['handle', 'lead', 'run'],
     'unrivalled': ['extraordinary', 'standout', 'stands on its own'],
     'tackle': ['aim', 'pursue', 'seek', 'take on'],
     'outstanding': ['excellent', 'extraordinary'],
@@ -42,7 +42,6 @@ var mascWords = {
     'under pressure': null,
     'manage relationships': ['be a great partner', 'handle relationships', 'maintain relationships'],
     'best in class': ['premier', 'elite', 'exclusive'],
-    'proven track record': ['consistent record', 'consistent track record'],
     'command respect': ['earn respect', 'garner respect', 'have respect'],
     'a strong track record': ['a consistent track record', 'a strong background'],
     'owning the': ['being responsible for the', 'leading the']
