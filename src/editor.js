@@ -7,8 +7,8 @@ import Editor from 'draft-js-plugins-editor';
 import createPlugins from './create-plugins';
 import {Map} from 'immutable';
 import {femWords, mascWords} from './words.js'
-import ReactTooltip from 'react-tooltip';
 import './editorStyles.css'
+import PhraseSpan from './PhraseSpan'
 
 class WysiwygEditor extends Component {
     constructor(props) {
@@ -24,16 +24,11 @@ class WysiwygEditor extends Component {
         this.state = {
             editorState: props.value
                 ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.value))
-                : EditorState.createEmpty(),
-            update: false
+                : EditorState.createEmpty()
         };
         this.phraseDecorator = this.getPhraseDecorator()
     }
 
-    handleClick(e) {
-        this.setState({ update: true, altWord: e.target.innerText });
-    }
-    
     getPhraseDecorator() {
         let mascWordsArr = Object.keys(mascWords)
         let MASC_REGEX = new RegExp(`\\b(${mascWordsArr.join('|')})`, 'gi')
@@ -54,46 +49,13 @@ class WysiwygEditor extends Component {
             }
         }
 
-        const PhraseSpan = (props) => {
-            console.log('phrase span state', this.state)
-            let caseInsensitiveRegex = new RegExp(props.decoratedText, 'i')
-            if(caseInsensitiveRegex.test(mascWordsArr.join('|'))) {
-                return createPhraseSpan(props, mascWords, 'mascWordSpan')
-            } else if(caseInsensitiveRegex.test(femWordsArr.join('|'))){
-                return createPhraseSpan(props, femWords, 'femWordSpan')
-            }
-        };
-
-        let counter = 0;
-        
-        const createPhraseSpan = (props, genderedObject, genderedClassName) => {
-            if(genderedObject[(props.decoratedText).toLowerCase()] == null){
-                return <span className={genderedClassName}>{props.children}</span>;
-            } else {
-                counter = counter + 1;
-                counter = counter.toString();
-                let altWordsItems = genderedObject[(props.decoratedText).toLowerCase()].map((altWord, index) => {
-                    return <li key={index} onClick={this.handleClick.bind(this)}>{altWord}</li>
-                })
-                return (
-                    <span>
-                        <span 
-                            className={genderedClassName} 
-                            data-tip 
-                            data-for={counter}
-                            >{props.children}</span>
-                        <ReactTooltip className='focusTooltip' delayHide={500} id={counter} effect='solid' aria-haspopup='true' cursor='pointer' place='bottom' getContent={() => {
-                            return <ul className='altListUl'>{altWordsItems}</ul>
-                        }}> 
-                        </ReactTooltip>
-                    </span>
-                )
-            }
+        const phraseSpan = (props) => {
+            return <PhraseSpan props={props} />
         }
         
         return {
             strategy: phraseStrategy,
-            component: PhraseSpan,
+            component: phraseSpan
         };       
  
     }
