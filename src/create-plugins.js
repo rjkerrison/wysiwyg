@@ -58,7 +58,10 @@ export default ({
                 'ordered-list-item'
             )),
         }].filter(toolbarItem => !toolbar.disableItems.includes(toolbarItem.key)), ...toolbar.textActions],
-        inlineStyles: [{label: 'Bold', button: <b>B</b>, style: 'BOLD'}],
+        inlineStyles: [
+            {label: 'Bold', button: <b>B</b>, style: 'BOLD'},
+            {label: 'Italics', button: <i>I</i>, style: 'ITALIC'}
+        ],
         clearTextActions: true
     }),
 ];
