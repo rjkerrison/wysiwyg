@@ -19,7 +19,7 @@ var rawContent = {
         },
         {
             "key": "a1uob",
-            "text": "Words that are biased towards women include caring and will show with a pink border.",
+            "text": "Words that are biased towards women include contribute and will show with a pink border.",
             "type": "unstyled",
             "depth": 0,
             "inlineStyleRanges": [],

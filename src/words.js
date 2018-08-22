@@ -1,5 +1,6 @@
 var femWords = {
     'contribute': ['chip in', 'give', 'supply'],
+    'interpersonal skills': ['social skills'],
     'interpersonal': 'social',
     'encourage': ['reassure', 'support'],
     'helpful': ['advantageous', 'conducive', 'effective', 'useful'],
@@ -16,12 +17,11 @@ var femWords = {
     'families': null,
     'our team': null,
     'passion for making': null,
-    'interpersonal skills': ['social skills'],
-    'take care of': ['deal with', 'look after'],
-    'passion for making': null
+    'take care of': ['deal with', 'look after']
   }
 
 var mascWords = {
+    'manage relationships': ['be a great partner', 'handle relationships', 'maintain relationships'],
     'manage': ['handle', 'lead', 'run'],
     'proven track record': ['consistent record', 'consistent track record'],
     'proven': ['confirmed', 'shown', 'tried', 'validated'],
@@ -40,7 +40,6 @@ var mascWords = {
     'best-in-class': ['elite', 'exclusive', 'premier'],
     'drive for': ['commit to', 'work towards', 'aim for'],
     'under pressure': null,
-    'manage relationships': ['be a great partner', 'handle relationships', 'maintain relationships'],
     'best in class': ['premier', 'elite', 'exclusive'],
     'command respect': ['earn respect', 'garner respect', 'have respect'],
     'a strong track record': ['a consistent track record', 'a strong background'],

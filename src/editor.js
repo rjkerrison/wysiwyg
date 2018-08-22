@@ -50,7 +50,7 @@ class WysiwygEditor extends Component {
         }
 
         const phraseSpan = (props) => {
-            return <PhraseSpan props={props} />
+            return <PhraseSpan {...props}/>
         }
         
         return {
