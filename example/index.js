@@ -24,7 +24,7 @@ var upload = multer({
 var APP_PORT = process.env.PORT || 3030;
 
 var app = express();
-if (process.env.NODE_ENV !== 'production') {
+if (true || process.env.NODE_ENV !== 'production') {
     process.env.NODE_ENV = 'development';
     var wrappack = require('wrappack');
     var config = require('./config');
